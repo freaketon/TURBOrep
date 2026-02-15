@@ -1,0 +1,27 @@
+{
+  "linkedin_email": "your-linkedin-email@example.com",
+  "linkedin_password": "your-linkedin-password",
+  "sales_nav_search_url": "https://www.linkedin.com/sales/search/people?savedSearchId=YOUR_SAVED_SEARCH_ID",
+  "apollo_api_key": "your-apollo-api-key",
+  "apollo_sequence_id": "your-apollo-sequence-id",
+  "icp_elite_keywords": [
+    "CEO",
+    "CTO",
+    "CFO",
+    "COO",
+    "Founder",
+    "Co-Founder",
+    "Owner",
+    "President",
+    "Chief"
+  ],
+  "icp_high_keywords": [
+    "VP",
+    "Vice President",
+    "Director",
+    "Head of",
+    "Senior Manager",
+    "Manager",
+    "Partner"
+  ]
+}

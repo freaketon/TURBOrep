@@ -1,0 +1,24 @@
+# Credentials — never commit
+config.json
+
+# Output files
+leads.json
+leads_enriched.json
+leads_failed_enrichment.json
+upload_log.txt
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
