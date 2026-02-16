@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "TURBOrep – LinkedIn to Apollo Pipeline",
+  "version": "1.0.0",
+  "description": "Scrape Sales Navigator leads, qualify by ICP, enrich via Apollo, and upload to CRM with daily batch tracking.",
+
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabs",
+    "alarms"
+  ],
+
+  "host_permissions": [
+    "https://api.apollo.io/*",
+    "https://www.linkedin.com/*"
+  ],
+
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://www.linkedin.com/sales/search/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "TURBOrep"
+  }
+}

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+
+    <!-- ── Header ─────────────────────────────────────────── -->
+    <header>
+      <h1>TURBO<span class="accent">rep</span></h1>
+      <nav>
+        <button class="tab active" data-tab="dashboard">Dashboard</button>
+        <button class="tab" data-tab="searches">Searches</button>
+        <button class="tab" data-tab="settings">Settings</button>
+      </nav>
+    </header>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <!-- ██  DASHBOARD TAB                                     -->
+    <!-- ══════════════════════════════════════════════════════ -->
+    <section id="dashboard" class="tab-content active">
+
+      <!-- Search selector -->
+      <div class="field">
+        <label>Active Search</label>
+        <select id="active-search">
+          <option value="">— select a saved search —</option>
+        </select>
+      </div>
+
+      <!-- Progress -->
+      <div id="progress-section" class="hidden">
+        <div class="progress-bar-wrap">
+          <div class="progress-bar" id="batch-progress" style="width:0%"></div>
+        </div>
+        <p class="progress-text" id="progress-text">0 / 0 leads</p>
+
+        <!-- Stats grid -->
+        <div class="stats-grid">
+          <div class="stat"><span class="stat-val" id="stat-processed">0</span><span class="stat-label">Processed</span></div>
+          <div class="stat"><span class="stat-val" id="stat-qualified">0</span><span class="stat-label">Qualified</span></div>
+          <div class="stat"><span class="stat-val" id="stat-enriched">0</span><span class="stat-label">Enriched</span></div>
+          <div class="stat"><span class="stat-val" id="stat-uploaded">0</span><span class="stat-label">Uploaded</span></div>
+          <div class="stat"><span class="stat-val" id="stat-skipped">0</span><span class="stat-label">Skipped</span></div>
+          <div class="stat"><span class="stat-val" id="stat-failed">0</span><span class="stat-label">Failed</span></div>
+        </div>
+
+        <p class="muted" id="last-run-text"></p>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls">
+        <div class="field inline">
+          <label>Batch size</label>
+          <input type="number" id="batch-size-input" value="25" min="1" max="100">
+        </div>
+        <button class="btn primary" id="btn-start">Start Batch</button>
+        <button class="btn danger hidden" id="btn-stop">Stop</button>
+      </div>
+
+      <!-- Status badge -->
+      <div class="status-badge" id="status-badge">IDLE</div>
+
+      <!-- Log -->
+      <div class="log-wrap">
+        <h3>Activity Log</h3>
+        <div class="log" id="log-output"></div>
+      </div>
+
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <!-- ██  SEARCHES TAB                                      -->
+    <!-- ══════════════════════════════════════════════════════ -->
+    <section id="searches" class="tab-content">
+
+      <h3>Add Saved Search</h3>
+      <div class="field">
+        <label>Name</label>
+        <input type="text" id="new-search-name" placeholder="e.g. VP Sales – SaaS – US">
+      </div>
+      <div class="field">
+        <label>Sales Navigator URL</label>
+        <input type="text" id="new-search-url" placeholder="https://www.linkedin.com/sales/search/people?savedSearchId=…">
+      </div>
+      <button class="btn primary" id="btn-add-search">Add Search</button>
+
+      <h3 style="margin-top:16px">Saved Searches</h3>
+      <div id="searches-list"></div>
+
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <!-- ██  SETTINGS TAB                                      -->
+    <!-- ══════════════════════════════════════════════════════ -->
+    <section id="settings" class="tab-content">
+
+      <h3>Apollo</h3>
+      <div class="field">
+        <label>API Key</label>
+        <input type="password" id="set-api-key" placeholder="Your Apollo API key">
+      </div>
+      <div class="field">
+        <label>Sequence ID <span class="muted">(optional)</span></label>
+        <input type="text" id="set-sequence-id" placeholder="Apollo sequence ID">
+      </div>
+
+      <h3>Timing</h3>
+      <div class="field">
+        <label>Delay between leads (seconds)</label>
+        <input type="number" id="set-delay" value="3" min="1" max="30">
+      </div>
+
+      <h3>ICP – Primary</h3>
+      <p class="muted">Leads matching these titles are always enriched and tagged ICP_PRIMARY.</p>
+      <div class="field">
+        <label>Title must include (comma-separated)</label>
+        <textarea id="icp-primary-include" rows="2" placeholder="CEO, CTO, Founder, Owner"></textarea>
+      </div>
+      <div class="field">
+        <label>Title must NOT include</label>
+        <textarea id="icp-primary-exclude" rows="1" placeholder="Former, Ex-, Assistant to"></textarea>
+      </div>
+
+      <h3>ICP – Secondary</h3>
+      <p class="muted">Senior leadership – enriched and tagged ICP_SECONDARY.</p>
+      <div class="field">
+        <label>Title must include</label>
+        <textarea id="icp-secondary-include" rows="2" placeholder="VP, Director, Head of"></textarea>
+      </div>
+      <div class="field">
+        <label>Title must NOT include</label>
+        <textarea id="icp-secondary-exclude" rows="1" placeholder="Former, Ex-, Assistant"></textarea>
+      </div>
+
+      <h3>Global Exclusions</h3>
+      <div class="field">
+        <label>Always skip if title contains</label>
+        <textarea id="icp-global-exclude" rows="1" placeholder="Intern, Student, Retired"></textarea>
+      </div>
+
+      <button class="btn primary" id="btn-save-settings">Save Settings</button>
+      <span class="muted" id="settings-saved-msg"></span>
+
+    </section>
+
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
