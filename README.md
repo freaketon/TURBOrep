@@ -65,8 +65,9 @@ Edit `config.json` with your actual values:
   "sales_nav_search_url": "https://www.linkedin.com/sales/search/people?savedSearchId=...",
   "apollo_api_key": "your-apollo-api-key",
   "apollo_sequence_id": "your-sequence-id",
-  "icp_elite_keywords": ["CEO", "CTO", "CFO", "Founder", "Owner"],
-  "icp_high_keywords": ["VP", "Director", "Head of", "Manager"]
+  "icp_primary_keywords": ["Founder", "Co-Founder", "CEO", "Creative Director", "Head of Content", "Head of Video", "Executive Producer", "Content Lead"],
+  "icp_secondary_keywords": ["Video Producer", "Lead Editor", "Senior Editor", "Production Manager", "Content Manager", "Director of Content", "Studio Manager"],
+  "icp_exclude_keywords": ["Intern", "Student", "Retired", "Actor", "Film Director", "Cinematographer"]
 }
 ```
 
@@ -116,15 +117,26 @@ option to enable dry-run mode.
 Each run uploads `leads.json`, `leads_enriched.json`, and `upload_log.txt`
 as build artifacts retained for 30 days.
 
-## ICP Tier Classification
+## ICP Tier Classification — "Archive-Drowning Aiden"
 
-Leads are tagged based on job title keywords from your config:
+Target: Founder or content lead running a video-first business with 2+ editors
+and a high publishing cadence, where a growing archive has become an execution
+tax that caps output and margin.
 
-- **ELITE** — matches any keyword in `icp_elite_keywords` (e.g. CEO, CTO, Founder)
-- **HIGH** — matches any keyword in `icp_high_keywords` (e.g. VP, Director)
-- Defaults to **HIGH** if no keyword matches
+Leads are qualified and tagged based on job title keywords:
 
-Each contact is also tagged with `Sales_Nav_Auto` and `imported_YYYY-MM-DD`.
+- **PRIMARY** — Decision makers with budget authority at video-first content
+  businesses (e.g. Founder, Creative Director, Head of Content, Executive Producer).
+  Matches keywords in `icp_primary_keywords`.
+- **SECONDARY** — Operational champions who feel archive pain daily
+  (e.g. Lead Editor, Video Producer, Production Manager, Content Manager).
+  Matches keywords in `icp_secondary_keywords`.
+- **EXCLUDED** — Leads matching `icp_exclude_keywords` are skipped entirely
+  (e.g. Intern, Actor, Film Director, Cinematographer).
+- **No match** — Leads that don't match any tier are skipped (no Apollo credits wasted).
+
+Each uploaded contact is tagged with `Sales_Nav_Auto`, `ICP_PRIMARY` or
+`ICP_SECONDARY`, and `imported_YYYY-MM-DD`.
 
 ## API Endpoints Used
 

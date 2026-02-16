@@ -4,24 +4,27 @@
   "sales_nav_search_url": "https://www.linkedin.com/sales/search/people?savedSearchId=YOUR_SAVED_SEARCH_ID",
   "apollo_api_key": "your-apollo-api-key",
   "apollo_sequence_id": "your-apollo-sequence-id",
-  "icp_elite_keywords": [
-    "CEO",
-    "CTO",
-    "CFO",
-    "COO",
-    "Founder",
-    "Co-Founder",
-    "Owner",
-    "President",
-    "Chief"
+  "icp_primary_keywords": [
+    "Founder", "Co-Founder", "CEO", "Owner", "President",
+    "Creative Director", "Content Director", "Media Director",
+    "Head of Content", "Head of Video", "Head of Production",
+    "Head of Media", "Head of Creative",
+    "Executive Producer", "Chief Content Officer", "CCO",
+    "Content Lead", "Video Lead"
   ],
-  "icp_high_keywords": [
-    "VP",
-    "Vice President",
-    "Director",
-    "Head of",
-    "Senior Manager",
-    "Manager",
-    "Partner"
+  "icp_secondary_keywords": [
+    "Video Producer", "Senior Producer", "Production Manager",
+    "Lead Editor", "Senior Editor", "Editor-in-Chief",
+    "Post-Production Manager", "Head of Post", "Post-Production Supervisor",
+    "Content Manager", "Content Strategist",
+    "COO", "Operations Manager", "Director of Operations",
+    "VP Content", "VP Production", "VP Creative",
+    "Director of Content", "Director of Video", "Director of Production",
+    "Studio Manager", "Production Coordinator"
+  ],
+  "icp_exclude_keywords": [
+    "Intern", "Student", "Retired", "Actor", "Talent", "Model",
+    "Film Director", "Cinematographer", "Colorist", "Sound Designer",
+    "Accountant", "Legal Counsel", "HR Manager"
   ]
 }

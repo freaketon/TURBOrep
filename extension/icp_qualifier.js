@@ -9,30 +9,64 @@
  */
 
 /**
- * Default ICP configuration – used until the user customizes it.
+ * Default ICP configuration – "Archive-Drowning Aiden"
+ * =====================================================
+ * Target: Founder or content lead running a video-first business
+ * with 2+ editors and a high publishing cadence, where a growing
+ * archive has become an execution tax that caps output and margin.
+ *
+ * PRIMARY  = Decision makers with budget authority (the signer)
+ * SECONDARY = Operational champions who feel the pain daily (the champion)
+ *
+ * Company filters boost hit rate by narrowing to video/content/media orgs.
+ *
+ * Explicit exclusions per ICP definition:
+ *   - Solo creators, film/cinema-first teams, post-production-only shops
+ *   - Anyone without budget authority or reuse workflow
  */
 export const DEFAULT_ICP_CONFIG = {
   primary: {
-    description: "C-suite, founders, and owners",
+    description: "Decision makers at video-first content businesses (budget authority)",
     title_include: [
-      "CEO", "CTO", "CFO", "COO", "CMO", "CRO", "CIO", "CISO",
-      "Founder", "Co-Founder", "Owner", "President", "Chief"
+      "Founder", "Co-Founder", "CEO", "Owner", "President",
+      "Creative Director", "Content Director", "Media Director",
+      "Head of Content", "Head of Video", "Head of Production",
+      "Head of Media", "Head of Creative",
+      "Executive Producer", "Chief Content Officer", "CCO",
+      "Content Lead", "Video Lead"
     ],
-    title_exclude: ["Former", "Ex-", "Assistant to"],
+    title_exclude: [
+      "Former", "Ex-", "Assistant to",
+      "Film Director", "Cinematographer"
+    ],
     company_include: [],
     company_exclude: [],
   },
   secondary: {
-    description: "Senior leadership – VPs, Directors, Heads",
+    description: "Operational champions who feel archive pain daily (the internal champion)",
     title_include: [
-      "VP", "Vice President", "Director", "Head of",
-      "Senior Manager", "Partner", "General Manager"
+      "Video Producer", "Senior Producer", "Production Manager",
+      "Lead Editor", "Senior Editor", "Editor-in-Chief",
+      "Post-Production Manager", "Head of Post", "Post-Production Supervisor",
+      "Content Manager", "Content Strategist",
+      "COO", "Operations Manager", "Director of Operations",
+      "VP Content", "VP Production", "VP Creative",
+      "Director of Content", "Director of Video", "Director of Production",
+      "Studio Manager", "Production Coordinator"
     ],
-    title_exclude: ["Former", "Ex-", "Assistant"],
+    title_exclude: [
+      "Former", "Ex-", "Assistant",
+      "Film Director", "Cinematographer",
+      "Colorist", "Sound Designer"
+    ],
     company_include: [],
     company_exclude: [],
   },
-  global_exclude: ["Intern", "Student", "Retired"],
+  global_exclude: [
+    "Intern", "Student", "Retired",
+    "Actor", "Talent", "Model",
+    "Accountant", "Legal Counsel", "HR Manager"
+  ],
 };
 
 

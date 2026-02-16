@@ -106,23 +106,32 @@ def _post_with_retry(url: str, payload: dict, headers: dict) -> requests.Respons
 # ICP tier classification
 # ---------------------------------------------------------------------------
 
-def classify_icp_tier(job_title: str, elite_keywords: list[str], high_keywords: list[str]) -> str:
+def classify_icp_tier(job_title: str, primary_keywords: list[str], secondary_keywords: list[str], exclude_keywords: list[str] | None = None) -> str | None:
     """
-    Classify a lead as ELITE or HIGH based on job title keywords.
-    Falls back to HIGH if no ELITE match is found.
+    Classify a lead as PRIMARY or SECONDARY based on job title keywords.
+    Returns None if the lead matches an exclusion keyword or no tier.
+
+    ICP: "Archive-Drowning Aiden" — video-first content businesses.
+    PRIMARY  = decision makers with budget authority (Founder, Creative Director, etc.)
+    SECONDARY = operational champions who feel archive pain (Lead Editor, Video Producer, etc.)
     """
     title_lower = job_title.lower()
 
-    for kw in elite_keywords:
-        if kw.lower() in title_lower:
-            return "ELITE"
+    # Check exclusions first
+    if exclude_keywords:
+        for kw in exclude_keywords:
+            if kw.lower() in title_lower:
+                return None
 
-    for kw in high_keywords:
+    for kw in primary_keywords:
         if kw.lower() in title_lower:
-            return "HIGH"
+            return "PRIMARY"
 
-    # Default to HIGH for any lead that made it through the Sales Nav search
-    return "HIGH"
+    for kw in secondary_keywords:
+        if kw.lower() in title_lower:
+            return "SECONDARY"
+
+    return None
 
 
 # ---------------------------------------------------------------------------
@@ -246,8 +255,23 @@ def run(config: dict | None = None) -> dict:
 
     api_key = config["apollo_api_key"]
     sequence_id = config.get("apollo_sequence_id", "")
-    elite_keywords = config.get("icp_elite_keywords", ["CEO", "CTO", "CFO", "Founder", "Owner"])
-    high_keywords = config.get("icp_high_keywords", ["VP", "Director", "Head of", "Manager"])
+    primary_keywords = config.get("icp_primary_keywords", [
+        "Founder", "Co-Founder", "CEO", "Owner", "President",
+        "Creative Director", "Content Director", "Media Director",
+        "Head of Content", "Head of Video", "Head of Production",
+        "Executive Producer", "Chief Content Officer", "Content Lead", "Video Lead",
+    ])
+    secondary_keywords = config.get("icp_secondary_keywords", [
+        "Video Producer", "Senior Producer", "Production Manager",
+        "Lead Editor", "Senior Editor", "Editor-in-Chief",
+        "Post-Production Manager", "Head of Post", "Content Manager",
+        "COO", "Operations Manager", "Director of Content",
+        "Director of Video", "Director of Production", "Studio Manager",
+    ])
+    exclude_keywords = config.get("icp_exclude_keywords", [
+        "Intern", "Student", "Retired", "Actor", "Talent", "Model",
+        "Film Director", "Cinematographer",
+    ])
 
     leads = load_enriched_leads()
     logger.info("Loaded %d enriched leads for upload.", len(leads))
@@ -270,8 +294,13 @@ def run(config: dict | None = None) -> dict:
             skipped += 1
             continue
 
-        # Classify ICP tier
-        tier = classify_icp_tier(lead.get("job_title", ""), elite_keywords, high_keywords)
+        # Classify ICP tier — skip leads that don't match any tier
+        tier = classify_icp_tier(lead.get("job_title", ""), primary_keywords, secondary_keywords, exclude_keywords)
+
+        if tier is None:
+            logger.info("Skipping %s — does not match any ICP tier.", name)
+            skipped += 1
+            continue
 
         # Tags: campaign source + ICP tier
         labels = [
